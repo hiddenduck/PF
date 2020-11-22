@@ -131,6 +131,7 @@ unline (h:t) = h ++ "\n" ++ unline t
 pmaior :: Ord a => [a] -> Int
 pmaior l = snd(pmaiorAux l)
 pmaiorAux :: Ord a => [a] -> (a,Int)
+pmaiorAux [x] = (x,0)
 pmaiorAux (h:t) = if h > m then (h,0) else (h,p+1)
  where
  (m,p) = pmaiorAux t
