@@ -113,7 +113,12 @@ unio l (y:ys) = if elem y l then unio l ys else [y] ++ unio l ys
 intersec :: Eq a => [a] -> [a] -> [a]
 intersec [] _ = []
 intersec _ [] = []
-intersec l (y:ys) = if elem y l then y: intersec l ys else intersec l ys
+intersec (h:t) l2 = (intersectAux l2 h) ++ intersec t l2
+ where
+ intersectAux [] _ = []
+ intersectAux (h:t) x
+  | h == x = [h]
+  | otherwise = intersectAux t x
 --25
 inser :: Ord a => a -> [a] -> [a]
 inser x [] = [x]
