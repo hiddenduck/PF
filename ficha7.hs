@@ -70,6 +70,58 @@ postorder :: RTree a -> [a]
 postorder (R n l) = concat(map postorder l) ++ [n]
 
 --3
-data BTree a = Empty | Node a (BTree a) (BTree a)
-data LTree a = Tip a | Fork (LTree a) (LTree a)
+data BTree a = Empty | Node a (BTree a) (BTree a) deriving Show
+data LTree a = Tip a | Fork (LTree a) (LTree a) deriving Show
+
+a4 = Fork (Fork (Tip 2) (Tip 3)) (Fork (Tip 2) (Fork (Fork (Tip 2) (Tip 4)) (Tip 2)))
 --a)
+ltSum :: Num a => LTree a -> a
+ltSum (Fork e d) = ltSum e + ltSum d
+ltSum (Tip a)    = a
+--b)
+listaLT :: LTree a -> [a]
+listaLT (Tip a)    = [a]
+listaLT (Fork e d) = listaLT e ++ listaLT d
+--c)
+ltHeight :: LTree a -> Int
+ltHeight (Fork e d) = 1 + max (ltHeight e) (ltHeight d)
+ltHeight (Tip _) = 0
+
+--4
+data FTree a b = Leaf b | No a (FTree a b) (FTree a b) deriving Show
+a5 = No 4 (No 2 (Leaf 1) (Leaf 3)) (No 10 (No 2 (Leaf 4) (Leaf 2)) (Leaf 9))
+{- 
+              No 'b'
+              /    \
+      No 'c'        leaf 4
+     /     \
+ Leaf 1    Leaf 2
+-}
+a6 = No 'b' (No 'c' (Leaf 1) (Leaf 2)) (Leaf 4)
+
+--a)
+--(BTree Char,Ltree Int)
+{-   Node 'b'                 Fork
+    /      \                 /     \
+ Node 'c'                  Fork     Tip 4
+ /   \                     / \
+                        Tip 1 Tip 2
+-}
+splitFTree :: FTree a b -> (BTree a, LTree b)
+splitFTree a = case a of
+ Leaf b   -> (Empty, Tip b)
+ No a e d -> (Node a x y, Fork x' y')
+  where
+  (x,x') = splitFTree e
+  (y,y') = splitFTree d 
+
+--b)
+joinTrees:: BTree a -> LTree b -> Maybe (FTree a b)
+joinTrees Empty (Tip b) = Just (Leaf b)
+joinTrees (Node x e1 d1) (Fork e2 d2) = case joinTrees e1 e2 of 
+    Nothing -> Nothing
+    Just f -> case joinTrees d1 d2 of
+        Just g -> Just (No x f g)
+        Nothing -> Nothing
+joinTrees _ _ = Nothing
+
