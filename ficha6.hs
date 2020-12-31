@@ -149,7 +149,7 @@ mediaAprov turma = somaAprov turma / contaAprov turma
   Aprov a -> 1 + contaAprov e + contaAprov d
   _       -> 0 + contaAprov e + contaAprov d
 --3g)
--- considero que alunos que faltam não são availiados 
+-- considero que alunos que faltam não são avaliados 
 aprovAv :: Turma -> Float
 aprovAv Empty = 0
 aprovAv turma = aprovados / avaliados
