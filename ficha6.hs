@@ -16,7 +16,7 @@ a1 = Node 5 (Node 3 Empty (Node 4 Empty Empty)) (Node 9 Empty (Node 10 Empty Emp
 --1a
 altura :: BTree a -> Int
 altura Empty        = 0
-altura (Node r e d) = 1 + altura e + altura d
+altura (Node r e d) = max (1 + altura e) (1 + altura d)
 --1b
 contaNodos :: BTree a -> Int
 contaNodos Empty        = 0
