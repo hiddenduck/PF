@@ -72,9 +72,8 @@ normaliza :: Polinomio -> Polinomio
 normaliza p = foldl f [] (ordena p)
  where
  f [] x = [x]
- f ((c,g):t) (x,y)
-  | g == y = (c+x,y):t
-  | otherwise = (x,y):(c,g):t
+ f ((a,b):t) (c,d) | b == d = f t (a+c,b)
+                   | otherwise = (a,b):f t (c,d)
 --j)
 soma :: Polinomio -> Polinomio -> Polinomio
 soma l1 l2 = normaliza (l1++l2)
