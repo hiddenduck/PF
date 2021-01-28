@@ -29,8 +29,8 @@ folhas (Node r e d)         = folhas e + folhas d
 --1d
 prune :: Int -> BTree a -> BTree a
 prune 0 _                    = Empty
-prune _ (Node _ Empty Empty) = Empty 
-prune a (Node r e d)         = Node r (prune (a-1) e) (prune (a-1) e)
+prune _ Empty = Empty 
+prune a (Node r e d)         = Node r (prune (a-1) e) (prune (a-1) d)
 
 {-
             5 
