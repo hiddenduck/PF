@@ -158,7 +158,7 @@ aprovAv turma = aprovados / avaliados
  aprovAvAux :: Turma -> (Float,Float)
  aprovAvAux Empty = (0,0)
  aprovAvAux (Node (_,_,_,classificacao) e d) = case classificacao of
-  Aprov avaliacao -> (a+1,b)
+  Aprov avaliacao -> (a+1,b+1)
   Rep             -> (a,b+1)
   _               -> (a,b)
   where
