@@ -111,12 +111,13 @@ pegaEParte = do x <- getLine
                 return (partes x '/')
                
 
-verifica :: [String] -> IO ()
-verifica x = do let a = dirFiles fs1 x
-                if a == Nothing then print "Não é uma diretoria" else mostra a
+verifica :: Maybe[Nome] -> IO ()
+verifica x = if x == Nothing then do print "Não é uma diretoria" else do mostra x
+                
 
 mostra :: Maybe[Nome] -> IO()
-mostra (Just b) = aux b
+mostra (Just b) = do putStrLn"\nFicheiros presentes neste caminho: "
+                     aux b
  where
  aux [] = do return ()
  aux (h:t) = do putStrLn h
@@ -124,7 +125,8 @@ mostra (Just b) = aux b
 
 listaFich :: FileSystem -> IO ()
 listaFich fs = do path <- pegaEParte
-                  verifica path
+                  let a = dirFiles fs path
+                  verifica a
                   return()
 
 
