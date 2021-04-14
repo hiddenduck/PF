@@ -1,0 +1,3 @@
+# Progamação Funcional
+
+Haskell Exercises
